@@ -11,23 +11,23 @@ def show():
     profile = st.session_state.profile
 
     # ── Header ────────────────────────────────────────────────────────────────
-import datetime
-import pytz
-
-# Define the India timezone
-ist = pytz.timezone('Asia/Kolkata')
-now = datetime.datetime.now(ist)
-hour = now.hour
-
-# Determine the greeting based on India time
-if hour < 12:
-    greeting = "Good morning"
-elif 12 <= hour < 17:
-    greeting = "Good afternoon"
-else:
-    greeting = "Good evening"
-
-st.title(f"{greeting} ⚡")    
+    import datetime
+    import pytz
+    
+    # Define the India timezone
+    ist = pytz.timezone('Asia/Kolkata')
+    now = datetime.datetime.now(ist)
+    hour = now.hour
+    
+    # Determine the greeting based on India time
+    if hour < 12:
+        greeting = "Good morning"
+    elif 12 <= hour < 17:
+        greeting = "Good afternoon"
+    else:
+        greeting = "Good evening"
+    
+    st.title(f"{greeting} ⚡")    
 
     # ── Compute values ────────────────────────────────────────────────────────
     daily_kwh   = compute_daily_kwh(profile.appliances)
