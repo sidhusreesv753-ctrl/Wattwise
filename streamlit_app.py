@@ -15,7 +15,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 # --- ADD LOGIN CHECK HERE ---
-if not st.experimental_user.is_logged_in:
+if not st.user.is_logged_in:
     st.title("⚡ WattWise Login")
     st.info("Please log in with your Google account to access the energy tracker.")
     if st.button("Log in with Google"):
@@ -229,7 +229,7 @@ with st.sidebar:
         label_visibility="collapsed",
     )
     st.markdown("---")
-    st.sidebar.write(f"👤 {st.experimental_user.email}")
+    st.sidebar.write(f"👤 {st.user.email}")
     if st.sidebar.button("Logout"):
         st.logout()
     st.markdown("---")
