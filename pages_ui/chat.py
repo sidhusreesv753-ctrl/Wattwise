@@ -23,30 +23,43 @@ QUICK_REPLIES = [
 ]
 
 def get_ai_response(messages: list[dict]) -> str:
-    api_key = os.environ.get("OPENAI_API_KEY", "")
+    # Use the secret name we set up in the Streamlit Dashboard
+    api_key = st.secrets.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    
     if not api_key:
-        return "⚠️ OpenAI API key not set. Add `OPENAI_API_KEY=sk-...` to your `.env` file to enable AI chat."
+        return "⚠️ Gemini API key not set. Please add `GEMINI_API_KEY` to your Streamlit Secrets."
 
-    payload = {
-        "model": "gpt-4o-mini",
-        "messages": [{"role": "system", "content": SYSTEM_PROMPT}] + messages,
-        "max_tokens": 600,
-        "temperature": 0.7,
-    }
     try:
-        resp = requests.post(
-            "https://api.openai.com/v1/chat/completions",
-            headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
-            json=payload, timeout=30,
+        # Configure the Google AI library
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash",
+            system_instruction=SYSTEM_PROMPT
         )
-        data = resp.json()
-        return data["choices"][0]["message"]["content"]
+
+        # Convert the history format to Gemini's format
+        # Gemini uses 'parts' instead of 'content'
+        gemini_history = []
+        for msg in messages[:-1]:  # All messages except the last one
+            role = "model" if msg["role"] == "assistant" else "user"
+            gemini_history.append({"role": role, "parts": [msg["content"]]})
+        
+        # Start chat session
+        chat = model.start_chat(history=gemini_history)
+        
+        # Send the latest user message (the last item in the list)
+        last_message = messages[-1]["content"]
+        response = chat.send_message(last_message)
+        
+        return response.text
+
     except Exception as e:
-        return f"❌ Error: {e}"
+        return f"❌ Gemini Error: {str(e)}"
 
 def show():
-    st.markdown('<div class="section-title">💬 AI Energy Coach</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-sub">Get personalised KSEB energy advice powered by AI</div>', unsafe_allow_html=True)
+    # Find the block at the bottom of show() and update it to this:
+    if not st.secrets.get("GEMINI_API_KEY"):
+        st.info("💡 **No Gemini key detected.** Add `GEMINI_API_KEY` to your Streamlit Secrets to activate AI responses.", icon="ℹ️")
 
     # ── Chat history ──────────────────────────────────────────────────────────
     chat_container = st.container()
