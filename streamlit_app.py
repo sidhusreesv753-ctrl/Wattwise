@@ -228,7 +228,10 @@ with st.sidebar:
         ["🏠 Dashboard", "🔌 Appliances", "📊 Bill Calculator", "🎛️ Simulator", "💬 AI Coach"],
         label_visibility="collapsed",
     )
-
+    st.markdown("---")
+    st.sidebar.write(f"👤 {st.experimental_user.email}")
+    if st.sidebar.button("Logout"):
+        st.logout()
     st.markdown("---")
     st.markdown("<div style='color:#475569;font-size:0.72rem'>KSEB Tariff FY 2025-26</div>", unsafe_allow_html=True)
     st.markdown("<div style='color:#475569;font-size:0.72rem'>Telescopic ≤ 250 units</div>", unsafe_allow_html=True)
