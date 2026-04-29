@@ -14,7 +14,15 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+# --- ADD LOGIN CHECK HERE ---
+if not st.experimental_user.is_logged_in:
+    st.title("⚡ WattWise Login")
+    st.info("Please log in with your Google account to access the energy tracker.")
+    if st.button("Log in with Google"):
+        st.login("google")
+    st.stop() # This prevents the rest of the app from loading until login is successful
 
+# --- EVERYTHING BELOW THIS LINE ONLY RUNS AFTER LOGIN ---
 # ── Global CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
