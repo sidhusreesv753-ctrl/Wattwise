@@ -99,8 +99,8 @@ def show():
         ]
         st.rerun()
 
-    if not os.environ.get("OPENAI_API_KEY"):
-        st.info("💡 **No OpenAI key detected.** Add `OPENAI_API_KEY=sk-...` to your `.env` file to activate AI responses.", icon="ℹ️")
+    if not os.environ.get("GEMINI_API_KEY"):
+        st.info("💡 **No Gemini key detected.** Add `GEMINI_API_KEY=sk-...` to your `.env` file to activate AI responses.", icon="ℹ️")
 
 
 def _send(text: str):
