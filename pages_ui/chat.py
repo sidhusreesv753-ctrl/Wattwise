@@ -1,4 +1,5 @@
 import streamlit as st
+import google.generativeai as genai
 import os, json, requests
 
 SYSTEM_PROMPT = """You are WattWise AI, an expert energy coach specializing in Kerala's 
