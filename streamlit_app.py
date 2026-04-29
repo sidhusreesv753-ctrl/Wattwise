@@ -219,7 +219,18 @@ with st.sidebar:
     st.markdown("<div style='color:#475569;font-size:0.72rem'>KSEB Tariff FY 2025-26</div>", unsafe_allow_html=True)
     st.markdown("<div style='color:#475569;font-size:0.72rem'>Telescopic ≤ 250 units</div>", unsafe_allow_html=True)
     st.markdown("<div style='color:#475569;font-size:0.72rem'>Non-Telescopic > 250 units</div>", unsafe_allow_html=True)
+# ── Sidebar navigation ────────────────────────────────────────────────────────
+with st.sidebar:
+    st.markdown("## ⚡ WattWise")
+    st.markdown("<div style='color:#64748b;font-size:0.78rem;margin-bottom:20px'>Kerala Energy Tracker</div>", unsafe_allow_html=True)
 
+    page = st.radio(
+        "Navigate",
+        ["🏠 Dashboard", "🔌 Appliances", "📊 Bill Calculator", "🎛️ Simulator", "💬 AI Coach"],
+        label_visibility="collapsed",
+    )
+
+    st.markdown("---")
 # ── Page routing ──────────────────────────────────────────────────────────────
 if page == "🏠 Dashboard":
     from pages_ui.dashboard import show
