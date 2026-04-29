@@ -14,15 +14,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-# --- ADD LOGIN CHECK HERE ---
-if not st.user.is_logged_in:
-    st.title("⚡ WattWise Login")
-    st.info("Please log in with your Google account to access the energy tracker.")
-    if st.button("Log in with Google"):
-        st.login("google")
-    st.stop() # This prevents the rest of the app from loading until login is successful
 
-# --- EVERYTHING BELOW THIS LINE ONLY RUNS AFTER LOGIN ---
 # ── Global CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
@@ -223,15 +215,6 @@ with st.sidebar:
     st.markdown("## ⚡ WattWise")
     st.markdown("<div style='color:#64748b;font-size:0.78rem;margin-bottom:20px'>Kerala Energy Tracker</div>", unsafe_allow_html=True)
 
-    page = st.radio(
-        "Navigate",
-        ["🏠 Dashboard", "🔌 Appliances", "📊 Bill Calculator", "🎛️ Simulator", "💬 AI Coach"],
-        label_visibility="collapsed",
-    )
-    st.markdown("---")
-    st.sidebar.write(f"👤 {st.user.email}")
-    if st.sidebar.button("Logout"):
-        st.logout()
     st.markdown("---")
     st.markdown("<div style='color:#475569;font-size:0.72rem'>KSEB Tariff FY 2025-26</div>", unsafe_allow_html=True)
     st.markdown("<div style='color:#475569;font-size:0.72rem'>Telescopic ≤ 250 units</div>", unsafe_allow_html=True)
